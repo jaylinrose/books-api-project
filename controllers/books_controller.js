@@ -11,6 +11,54 @@ books.get('/', (req, res) => {
         })
 })
 
+books.get('/', (req, res) => {
+    db.Book.find()
+    .then((books) => {
+        res.json(foundBooks)
+    })
+    .catch(err => {
+      console.log(err) 
+      res.send('error404')
+    })
+})
+
+books.post('/', (req, res) => {
+  if (!req.body.pic) {
+    // Default image if one is not provided
+    req.body.pic = 'http://placekitten.com/400/400'
+  }
+
+  db.Place.create(req.body)
+  .then(() => {
+      res.redirect('/books')
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.send('error404')
+  })
+})
+
+
+books.put('/:id', (req, res) => {
+  res.send('PUT /books/:id stub')
+})
+
+books.delete('/:id', (req, res) => {
+  res.send('DELETE /books/:id stub')
+})
+
+
+books.post('/:id/rant', (req, res) => {
+  res.send('GET /books/:id/ stub')
+})
+
+
+
+books.delete('/:id/rant/:rantId', (req, res) => {
+    res.send('GET /books/:id/rant/:rantId stub')
+})
+
+
 module.exports = books
 
 books.get('/seed', (req, res) => {
